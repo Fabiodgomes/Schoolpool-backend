@@ -12,7 +12,7 @@ module.exports = {
           password: "apple",
           createdAt: new Date(),
           updatedAt: new Date(),
-        }, 
+        },
         {
           name: "Banana",
           email: "banana@banana.com",
@@ -20,7 +20,7 @@ module.exports = {
           password: "banana",
           createdAt: new Date(),
           updatedAt: new Date(),
-        },  
+        },
         {
           name: "Coco",
           email: "coco@coco.com",
@@ -28,7 +28,7 @@ module.exports = {
           password: "coco",
           createdAt: new Date(),
           updatedAt: new Date(),
-        },     
+        },
       ],
       {}
     );
