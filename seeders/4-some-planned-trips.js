@@ -8,7 +8,7 @@ module.exports = {
         {
           date: new Date(2022, 8, 28),
           time: "08:00:00",
-          capacity: 2,
+          capacity: 3,
           latitude: "52.3676° N",
           longitude: "4.9041° E",
           createdAt: new Date(),
@@ -20,7 +20,7 @@ module.exports = {
         {
           date: new Date(2022, 8, 29),
           time: "08:05:00",
-          capacity: 2,
+          capacity: 3,
           latitude: "52.35235037380259",
           longitude: "4.8974402671466075",
           createdAt: new Date(),
@@ -33,7 +33,7 @@ module.exports = {
         {
           date: new Date(2022, 8, 29),
           time: "01:00:00",
-          capacity: 2,
+          capacity: 3,
           latitude: "52.36288804385664",
           longitude: "4.86676614952774",
           createdAt: new Date(),
@@ -45,7 +45,7 @@ module.exports = {
         {
           date: new Date(2022, 8, 29),
           time: "01:00:00",
-          capacity: 2,
+          capacity: 3,
           latitude: "52.361483166361666",
           longitude: "4.936166340458636",
           createdAt: new Date(),
