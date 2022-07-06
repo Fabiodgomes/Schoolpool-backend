@@ -25,17 +25,6 @@ router.get("/:id", authMiddleware, async (req, res, next) => {
   }
 });
 
-router.get("/scheduledtrips", authMiddleware, async (req, res, next) => {
-  try {
-    const scheduledTrips = await ScheduledTrips.findAll();
-    console.log("SCHEDULED TRIPS", scheduledTrips);
-    res.send(scheduledTrips);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});
-
 router.patch("/:id/inscription", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -63,6 +52,44 @@ router.patch("/:id/inscription", authMiddleware, async (req, res, next) => {
     console.log("TEST", test);
     res.send({ message: `${numberOfKids} spot(s) booked`, id });
   } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/newplannedtrip", authMiddleware, async (req, res, next) => {
+  try {
+    const {
+      date,
+      time,
+      capacity,
+      latitude,
+      longitude,
+      schoolId,
+      transportationTypeId,
+    } = req.body;
+    const id = req.user.dataValues.id;
+    console.log("req.user", req.user);
+    if (!date || !time || !capacity || !latitude || !longitude || !schoolId) {
+      return res
+        .status(400)
+        .send(
+          "Please provide a date, time, capacity, latitude, longitude and schoolId"
+        );
+    }
+    const newPlannedTrip = await PlannedTrips.create({
+      date,
+      time,
+      capacity,
+      latitude,
+      longitude,
+      schoolId,
+      transportationTypeId,
+      userId: id,
+    });
+
+    return res.status(200).send({ newPlannedTrip });
+  } catch (error) {
+    console.log(error);
     next(error);
   }
 });
