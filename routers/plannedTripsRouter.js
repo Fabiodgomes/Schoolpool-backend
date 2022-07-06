@@ -25,6 +25,17 @@ router.get("/:id", authMiddleware, async (req, res, next) => {
   }
 });
 
+router.get("/scheduledtrips", authMiddleware, async (req, res, next) => {
+  try {
+    const scheduledTrips = await ScheduledTrips.findAll();
+    console.log("SCHEDULED TRIPS", scheduledTrips);
+    res.send(scheduledTrips);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 router.patch("/:id/inscription", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
