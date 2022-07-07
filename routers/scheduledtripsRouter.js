@@ -14,4 +14,21 @@ router.get("/", authMiddleware, async (req, res, next) => {
   }
 });
 
+router.get("/myscheduledtrips", authMiddleware, async (req, res, next) => {
+  try {
+    const userId = req.user.dataValues.id;
+    console.log("USER ID", userId);
+
+    const scheduledTripsByUser = await ScheduledTrips.findAll({
+      where: {
+        userId: userId,
+      },
+    });
+    res.send(scheduledTripsByUser);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 module.exports = router;
