@@ -6,6 +6,7 @@ const corsMiddleWare = require("cors");
 const authRouter = require("./routers/auth");
 const plannedTripsRouter = require("./routers/plannedTripsRouter");
 const scheduledTripsRouter = require("./routers/scheduledtripsRouter");
+const schoolRouter = require("./routers/schoolRouter");
 
 //constants
 const { PORT } = require("./config/constants");
@@ -25,6 +26,7 @@ app.use(express.json());
 app.use("/auth", authRouter);
 app.use("/plannedtrips", plannedTripsRouter);
 app.use("/scheduledtrips", scheduledTripsRouter);
+app.use("/schools", schoolRouter);
 
 //start listening
 app.listen(PORT, () => {
