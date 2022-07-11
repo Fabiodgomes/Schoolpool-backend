@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       address: { type: DataTypes.STRING, allowNull: false },
       latitude: { type: DataTypes.STRING, allowNull: false },
       longitude: { type: DataTypes.STRING, allowNull: false },
+      imageUrl: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,

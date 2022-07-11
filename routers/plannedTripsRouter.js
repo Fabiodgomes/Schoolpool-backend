@@ -4,6 +4,23 @@ const ScheduledTrips = require("../models/").scheduledTrip;
 const authMiddleware = require("../auth/middleware");
 const router = new Router();
 
+router.get("/myplannedtrips", authMiddleware, async (req, res, next) => {
+  try {
+    const userId = req.user.dataValues.id;
+    console.log("USER ID", userId);
+
+    const plannedTripsByUser = await PlannedTrips.findAll({
+      where: {
+        userId: userId,
+      },
+    });
+    res.send(plannedTripsByUser);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 router.get("/", authMiddleware, async (req, res, next) => {
   try {
     const plannedTrips = await PlannedTrips.findAll();
