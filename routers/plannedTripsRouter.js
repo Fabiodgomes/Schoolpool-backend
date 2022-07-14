@@ -4,23 +4,6 @@ const ScheduledTrips = require("../models/").scheduledTrip;
 const authMiddleware = require("../auth/middleware");
 const router = new Router();
 
-router.get("/myplannedtrips", authMiddleware, async (req, res, next) => {
-  try {
-    const userId = req.user.dataValues.id;
-    console.log("USER ID", userId);
-
-    const plannedTripsByUser = await PlannedTrips.findAll({
-      where: {
-        userId: userId,
-      },
-    });
-    res.send(plannedTripsByUser);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-});
-
 router.get("/", authMiddleware, async (req, res, next) => {
   try {
     const plannedTrips = await PlannedTrips.findAll();
@@ -31,21 +14,10 @@ router.get("/", authMiddleware, async (req, res, next) => {
   }
 });
 
-router.get("/:id", authMiddleware, async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const plannedTripById = await PlannedTrips.findByPk(id);
-    res.send(plannedTripById);
-  } catch (error) {
-    console.log(error.message);
-    next(error);
-  }
-});
-
 router.patch("/:id/inscription", authMiddleware, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { numberOfKids } = req.body;
+    const { numberOfKids, latitude, longitude } = req.body;
     console.log("REQUEST PARAMS ID", id);
     const plannedTrip = await PlannedTrips.findByPk(id);
     if (!id) {
@@ -56,17 +28,24 @@ router.patch("/:id/inscription", authMiddleware, async (req, res, next) => {
         .status(404)
         .send(`There's only ${plannedTrip.capacity} spots left`);
     }
+    if (!latitude || !longitude) {
+      return res.status(404).send("please provide a pick up point");
+    }
+    if (numberOfKids <= 0) {
+      return res.status(404).send(`You have to book at least 1 place`);
+    }
 
     await PlannedTrips.update(
       { capacity: plannedTrip.capacity - numberOfKids },
       { where: { id: plannedTrip.id } }
     );
-    const test = await ScheduledTrips.create({
+    await ScheduledTrips.create({
       numberOfKids: numberOfKids,
+      latitude: latitude,
+      longitude: longitude,
       plannedTripId: id,
       userId: req.user.id,
     });
-    console.log("TEST", test);
     res.send({ message: `${numberOfKids} spot(s) booked`, id });
   } catch (error) {
     next(error);
@@ -107,6 +86,34 @@ router.post("/newplannedtrip", authMiddleware, async (req, res, next) => {
     return res.status(200).send({ newPlannedTrip });
   } catch (error) {
     console.log(error);
+    next(error);
+  }
+});
+
+router.get("/myplannedtrips", authMiddleware, async (req, res, next) => {
+  try {
+    const userId = req.user.dataValues.id;
+    console.log("USER ID", userId);
+
+    const plannedTripsByUser = await PlannedTrips.findAll({
+      where: {
+        userId: userId,
+      },
+    });
+    res.send(plannedTripsByUser);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.get("/:id", authMiddleware, async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const plannedTripById = await PlannedTrips.findByPk(id);
+    res.send(plannedTripById);
+  } catch (error) {
+    console.log(error.message);
     next(error);
   }
 });

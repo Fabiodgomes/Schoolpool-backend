@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   scheduledTrips.init(
     {
       numberOfKids: DataTypes.INTEGER,
+      latitude: { type: DataTypes.STRING, allowNull: false },
+      longitude: { type: DataTypes.STRING, allowNull: false },
     },
     {
       sequelize,
