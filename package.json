@@ -21,6 +21,7 @@
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "pg": "^8.7.3",
+    "sass": "^1.53.0",
     "sequelize": "^6.21.2",
     "sequelize-cli": "^6.4.1"
   }
