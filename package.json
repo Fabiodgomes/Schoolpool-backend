@@ -4,7 +4,7 @@
   "description": "Simple express server with sequelize, pg and jwts",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon index.js",
+    "start": "node index.js",
     "dev": "npx nodemon .",
     "initdev": "npm run migrate && npm run seed",
     "migrate": "npx sequelize-cli db:migrate",

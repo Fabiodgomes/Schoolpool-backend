@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const PlannedTrips = require("../models/").plannedTrip;
 const ScheduledTrips = require("../models/").scheduledTrip;
+const Schools = require("../models/").school;
 const authMiddleware = require("../auth/middleware");
 const router = new Router();
 
@@ -101,6 +102,18 @@ router.get("/myplannedtrips", authMiddleware, async (req, res, next) => {
       },
     });
     res.send(plannedTripsByUser);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
+router.get("/plannedtripsincluding", authMiddleware, async (req, res, next) => {
+  try {
+    const plannedTrips = await PlannedTrips.findAll({
+      include: Schools,
+    });
+    res.send(plannedTrips);
   } catch (error) {
     console.log(error);
     next(error);
