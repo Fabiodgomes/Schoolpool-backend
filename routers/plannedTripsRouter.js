@@ -73,8 +73,8 @@ router.post("/newplannedtrip", authMiddleware, async (req, res, next) => {
           "Please provide a date, time, capacity, latitude, longitude and schoolId"
         );
     }
-    if (capacity <= 0) {
-      return res.status(400).send("Capacity has to be above 0");
+    if (capacity < 1) {
+      return res.status(400).send("Capacity has to be 1 at least");
     }
     const newPlannedTrip = await PlannedTrips.create({
       date,
